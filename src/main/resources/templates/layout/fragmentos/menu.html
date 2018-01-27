@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head></head>
+<body>
+	<nav class="aw-menu  js-menu " layout:fragment="menu">
+		<div class="user">
+			<img alt="user"
+				class="user-img img-circle img-thumbnail pull-left sombra"
+				th:src="@{/layout/imagens/user.png}" />
+			<div class="user-details panel-primary sombra">
+				<p class="user-text" th:text="'User: ' + ${#authentication.principal.usuario.nome}"></p>
+				<p class="user-text" th:text="'Empresa: ' + ${#authentication.principal.usuario.empresa.nome} + 
+											' (' + ${#authentication.principal.usuario.setor.descricao} +')'"></p>
+			</div>
+		</div>
+
+		<div class="panel panel-primary menu-details sombra">
+			<div class="panel-heading sombra">
+				<h3 class="panel-title text-center">
+					<strong>Menu</strong>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="dropdown componenteform">
+					<button class="btn btn-info btn-block dropdown-toggle fa  fa-shield" type="button"
+						id="root" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false" sec:authorize="hasRole('MASTERROOT')">
+						ROOT<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="root">
+						<li class="aw-menu__item" sec:authorize="hasRole('MASTERROOT')">
+							<a th:href="@{/administrador/usuarios}" class="item-menu">
+								<i class="fa fa-user-circle"></i> <span>Usuários</span>
+						</a>
+						</li>
+						<li class="aw-menu__item" sec:authorize="hasRole('MASTERROOT')">
+							<a th:href="@{/masterroot/empresas}" class="item-menu">
+								<i class="fa fa-building"></i> <span>Empresas</span>
+						</a>
+						</li>
+					</ul>
+				</div>
+				<div class="dropdown componenteform">
+					<button class="btn btn-info btn-block dropdown-toggle fa  fa-shield" type="button"
+						id="admloc" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')">
+						ADMINISTRADOR<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="admloc">
+						<li class="aw-menu__item" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')">
+							<a th:href="@{/administrador/usuarios}" class="item-menu">
+								<i class="fa fa-user-circle"></i> <span>Usuários</span>
+						</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li class="aw-menu__item" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')">
+							<a th:href="@{/administrador/produtos}" class="item-menu"> <i
+								class="fa  fa-shopping-basket"></i> <span>Produtos</span>
+						</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li class="aw-menu__item" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')">
+							<a th:href="@{/administrador/clientes}"> <i
+								class="fa  fa-building"></i> <span>Clientes</span>
+						</a>
+						</li>
+					</ul>
+				</div>
+				<div class="dropdown componenteform">
+					<button class="btn btn-info btn-block dropdown-toggle fa fa-wrench" type="button"
+						id="mninstrutor" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false" sec:authorize="hasRole('ADMLOC') or hasRole('MASTERROOT') or hasRole('CLIENTE')">
+						CLIENTES<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="mninstrutor">
+						<li class="aw-menu__item disable">
+							<a th:href="@{/designer/instrutor/aluno}"> 
+								<i class="fa  fa-list"></i>
+								<span>Requisições</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+</body>
+</html>

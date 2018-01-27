@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<section layout:fragment="conteudo">
+	<div class="panel panel-primary">
+		
+		<div class="panel-heading sombra">
+			<h2 class="panel-title text-center"><strong>Cadastro de Produto</strong></h2>
+		</div>
+		
+		<div class="panel-body">
+			<div class="container-fluid">
+
+				<th:block layout:insert="~{layout/fragmentos/alertas :: success}"></th:block>
+
+				<form method="post" class="form-vertical  js-form-loading" enctype="multipart/form-data"
+					th:object="${produto}" th:action="@{/administrador/produtos/novo}">
+					
+					<th:block layout:insert="~{layout/fragmentos/alertas :: validation}"></th:block>
+														
+					<input type="hidden" th:field="*{codigo}"/>
+					<input type="hidden" th:field="*{nomeimg}"/>
+					
+					<div class="col-xs-12 col-sm-3 col-md-3 componenteform">
+						<div class="input-group" th:classappend="${#fields.hasErrors('img')} ? has-error" >
+							<img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="@{/layout/imagens/ausente.png}" th:if="${#strings.isEmpty(produto.img)}"/>
+							<img class="col-xs-12 img-thumbnail img-responsive" id="foto" th:src="*{img}" th:if="${not #strings.isEmpty(produto.img)}"/>
+							<input type="hidden" th:field=*{img}/>
+							<input type="file" name="file" onchange="visualizarImg(3,0)" capture="camera"/>
+						</div>	
+					</div>
+					
+					<div class="col-xs-12 col-sm-9 col-md-9">
+						<div class="col-xs-12 col-sm-8 col-md-8 componenteform">
+							<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+								<label class="input-group-addon control-label">Nome</label>
+								<input id="nome" type="text" class="form-control" th:field="*{nome}" />
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-4 componenteform">
+							<div class="form-group" th:classappend="${#fields.hasErrors('valor')} ? has-error">
+								<label class="input-group-addon control-label">Valor</label>
+								<input id="nome" type="text" class="form-control" th:field="*{valor}" />
+							</div>
+						</div>
+						
+						<div class="col-xs-12 componenteform">
+							<div class="form-group" th:classappend="${#fields.hasErrors('descricao')} ? has-error">
+								<label class="input-group-addon control-label">Descrição</label>
+								<textarea id="descricao"  rows="4" cols="30" maxlength="500" class="form-control" th:field="*{descricao}">
+								</textarea>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-xs-12">
+						<div class="form-group">
+							<button class="btn  btn-success pull-left sombra-btn" type="submit" title="Salvar Exercício" data-toggle="tooltip">Salvar</button>
+							<a class="btn btn-info pull-right sombra-btn" th:href="@{/administrador/produtos}" title="voltar" data-toggle="tooltip"> 
+								<i class="fa  fa-reply"></i> 
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/layout/js/VisualizarImagem.js}"></script>
+</th:block>
+</html>

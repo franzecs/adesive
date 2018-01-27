@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+  	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<title>Gestor de Informações Pedagógicas</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:src="@{/datatable/dataTables.bootstrap.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/layout/css/layout.css}" />
+</head>
+<body>
+<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
+
+	<div class="layout_relatorio card">
+		<div class="layout_relatorio-header">
+			<h3 class="layout_relatorio-header-text"> Relatório de Faculdades </h3>
+		</div>
+	</div>
+
+	<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<th:block layout:fragment="javascript-extra">
+	</th:block>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<section layout:fragment="conteudo">
+		<div class="panel panel-primary">
+			
+			<div class="panel-heading sombra">
+				<h2 class="panel-title text-center"><strong>Cadastro de Empresas</strong></h2>
+			</div>
+			
+			<div class="panel-body">
+				<div class="container-fluid">
+
+					<th:block layout:insert="~{layout/fragmentos/alertas :: success}"></th:block>
+						
+					<form method="post" class="form-vertical  js-form-loading" enctype="multipart/form-data"
+						th:object="${empresa}" th:action="@{/masterroot/empresas/novo}">
+						
+						<th:block layout:insert="~{layout/fragmentos/alertas :: validation}"></th:block>
+															
+						<input type="hidden" th:field="*{codigo}"/>
+						<input type="hidden" th:field="*{nomeimg}"/>
+						<input type="hidden" th:field="*{fornecedor}"/>
+						
+						<div class="col-xs-12 col-sm-2 col-md-2 componenteform">
+							<div class="input-group" th:classappend="${#fields.hasErrors('img')} ? has-error" >
+								<img class="col-xs-12 img-thumbnail img-responsive" id="foto1" th:src="@{/layout/imagens/ausente.png}" th:if="${#strings.isEmpty(empresa.img)}"/>
+								<img class="col-xs-12 img-thumbnail img-responsive" id="foto" th:src="*{img}" th:if="${not #strings.isEmpty(empresa.img)}"/>
+								<input type="hidden" th:field=*{img}/>
+								<input type="file" name="file" onchange="visualizarImg(3,0)" capture="camera"/>
+							</div>
+						</div>
+						
+						<div class="col-xs-12 col-sm-10 col-md-10">
+							<div class="col-xs-12 col-sm-7 col-md-7 componenteform">
+								<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+									<label class="input-group-addon control-label">Nome</label>
+									<input id="nome" type="text" class="form-control" th:field="*{nome}"/>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-3 col-md-3 componenteform">
+								<div class="form-group" th:classappend="${#fields.hasErrors('cnpj')} ? has-error">
+									<label class="input-group-addon control-label">cnpj</label>
+									<input id="cpf"  type="text" class="form-control cpf"  th:field="*{cnpj}"/>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-2 col-md-2">
+								<div class="form-group" th:classappend="${#fields.hasErrors('dataadesao')} ? has-error">
+									<label class="input-group-addon control-label">Dt_Adesão:</label> 
+									<input id="datanascimento" type="text" class="form-control" th:field="*{dataadesao}"
+										   data-provide="datepicker" data-format="dd/mm/yyyy" data-date-language="pt-BR"
+										   data-date-autoclose="true" data-date-today-Highlight="true" 	/>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-12 col-md-12 componenteform ">
+								<div class="form-group" th:classappend="${#fields.hasErrors('endereco')} ? has-error">
+									<label class="input-group-addon control-label">Endereço</label>
+									<input id="cref"  type="text" class="form-control" th:field="*{endereco}"/>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-4 col-md-4 componenteform">
+								<div class="form-group" th:classappend="${#fields.hasErrors('telefone')} ? has-error">
+									<label class="input-group-addon control-label">Telefone</label>
+									<input id="celular"  type="text" class="form-control celular" th:field="*{telefone}"/>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-8 col-md-8 componenteform">
+								<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? has-error">
+									<label class="input-group-addon control-label">E-mail</label>
+									<input id="email"  type="text" class="form-control" th:field="*{email}"/>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 componenteform">
+								<div class="form-group" th:classappend="${#fields.hasErrors('observacao')} ? has-error">
+									<label class="input-group-addon control-label">Observação</label>
+									<textarea id="observacao"  rows="4" cols="30" maxlength="500" class="form-control" th:field="*{observacao}">
+									</textarea>
+								</div>
+							</div>
+						</div>
+																	
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<div class="form-group">
+								<button class="btn  btn-success pull-left sombra" type="submit" title="Salvar Empresa" data-toggle="tooltip">Salvar</button>
+								<a class="btn btn-info pull-right sombra" th:href="@{/masterroot/empresas}" title="voltar" data-toggle="tooltip"> 
+									<i class="fa  fa-reply"></i> 
+								</a>
+							</div>
+						</div>
+																	
+					</form>
+				</div>
+			</div>
+		</div>
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.pt-BR.min.js}"></script>
+	<script th:src="@{/layout/js/jquery.mask.min.js}"></script>
+	<script type="text/javascript">
+		$(".celular").mask("(99)00000-0000");
+		$(".cpf").mask("000.000.000-00");
+	</script>
+	<script th:src="@{/layout/js/VisualizarImagem.js}"></script>
+</th:block>
+</html>

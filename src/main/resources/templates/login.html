@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/LayoutSimples}">
+
+<th:block layout:fragment="conteudo">
+
+	<form th:action="@{/login}" method="POST" class="">
+
+		<div class="aw-simple-panel card-login">
+			<div style="background: rgba(130,130,130,.3); padding: 1px; margin:-10px;">
+				<img alt="Adesive" th:src="@{/layout/imagens/logo_Adesive.png}" style="max-height: 45px; background-color: white;"/>
+			
+				<!-- <div class="aw-simple-panel__message" th:if="${!#bools.isTrue(param.error)}">
+					Por favor, faça o login.
+				</div> -->
+				
+				<div class="aw-simple-panel__message  is-error" th:if="${#bools.isTrue(param.error)}">
+					O usuário e/ou senha não conferem
+				</div>
+			</div>
+			<br>
+			<div class="aw-simple-panel__box">
+				<div class="form-group  has-feedback">
+					<span class="glyphicon glyphicon-user  form-control-feedback"></span>
+					<input type="text" class="form-control input-xs funcional" placeholder="Identificador" 
+						autofocus="autofocus" name="username"/>
+				</div>
+				
+				<div class="form-group  has-feedback">
+					<span class="  form-control-feedback" ><img th:src="@{/layout/imagens/lock.png}"></span>
+					<input type="password" class="form-control input-xs" placeholder="Senha" name="password"/>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn  btn-primary  btn-lg  btn-block sombra-btn">Entrar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</th:block>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/layout/js/jquery.mask.min.js}"></script>
+	<script type="text/javascript">
+		$(".funcional").mask("00000-0");
+	</script>
+</th:block>
+
+
+</html>
