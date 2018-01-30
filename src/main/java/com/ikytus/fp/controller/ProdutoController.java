@@ -1,7 +1,12 @@
 package com.ikytus.fp.controller;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.Scanner;
 
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ikytus.fp.model.Produto;
+import com.ikytus.fp.repository.ProdutoRepository;
 import com.ikytus.fp.repository.filter.Filter;
+import com.ikytus.fp.service.ProdutoService;
 import com.ikytus.fp.util.Tools;
 import com.ikytus.fp.util.img.GravarImagem;
 import com.ikytus.fp.util.pageable.pageConfig;
-import com.ikytus.fp.repository.ProdutoRepository;
-import com.ikytus.fp.service.ProdutoService;
-import com.ikytus.fp.model.Produto;
 
 @Controller
 @RequestMapping("/administrador/produtos")
@@ -46,6 +51,8 @@ public class ProdutoController {
 	
 	@Autowired
 	Tools tools;
+	
+	Part arquivo;
 		
 	@GetMapping()
 	public ModelAndView listar(@RequestParam("pageSize") Optional<Integer> pageSize,
@@ -91,6 +98,25 @@ public class ProdutoController {
 		produtoRepository.delete(codigo);
 		
 		atributos.addFlashAttribute("mensagem","Produto removido com sucesso!");
+		return new ModelAndView("redirect:/administrador/produtos");
+	}
+	
+	@PostMapping("/gravarcsv")
+	public ModelAndView gravaCSV(@RequestParam("file") Part arquivo) throws IOException {
+		
+		Scanner scanner = new Scanner(arquivo.getInputStream(), "UTF-8");
+		scanner.useDelimiter(";");
+
+		while(scanner.hasNext()) {
+			String linha = scanner.nextLine();
+			if(linha !=null && !linha.trim().isEmpty()) {
+				linha = linha.replace("\"", "");
+				String[] dados = linha.split("\\;");
+				System.out.println("nome: " + dados[0] + " e o email: " + dados[1]);
+			}
+		}
+		scanner.close();
+						
 		return new ModelAndView("redirect:/administrador/produtos");
 	}
 }

@@ -90,6 +90,19 @@
 				</div>
 			<th:block layout:insert="~{layout/fragmentos/pageable :: pageControl ('/administrador/produtos')}"></th:block>
 		</div>
+		<form method="post" class="form-vertical" enctype="multipart/form-data"
+				th:action="@{/administrador/produtos/gravarcsv}">
+				
+				<input type="file" name="file"  capture="camera"/>
+												
+				<div class="col-xs-12">
+					<div class="form-group">
+						<button class="btn  btn-success pull-left sombra-btn" type="submit" 
+								title="Ler arquivo" data-toggle="tooltip">Ler Arquivo</button>
+					</div>
+				</div>
+		</form>
+		
 	</div>
 	<th:block layout:insert="~{layout/fragmentos/parts :: confirmaExclusao (@{/administrador/produtos})}"></th:block>
 </section>

@@ -52,8 +52,7 @@ public class UsuarioController {
 	
 	@Autowired
 	private Tools tools;
-	
-	
+		
 	@GetMapping()
 	public ModelAndView listar(@RequestParam("pageSize") Optional<Integer> pageSize,
 			@RequestParam("page") Optional<Integer> page, @ModelAttribute("filtro") Filter filter, Pageable pageable, String ordem) {

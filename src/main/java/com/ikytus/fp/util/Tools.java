@@ -1,6 +1,10 @@
 package com.ikytus.fp.util;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -48,4 +52,20 @@ public class Tools {
 	public Empresa getFornecedor(){
 		return  getEmpresa().getFornecedor();
 	}
+	
+	public void getCSV(Part arquivo) throws IOException {
+		Scanner scanner = new Scanner(arquivo.getInputStream(), "UTF-8");
+		scanner.useDelimiter(";");
+
+		while(scanner.hasNext()) {
+			String linha = scanner.nextLine();
+			if(linha !=null && !linha.trim().isEmpty()) {
+				linha = linha.replace("\"", "");
+				String[] dados = linha.split("\\;");
+				System.out.println("nome: " + dados[0] + " e o email: " + dados[1]);
+			}
+		}
+		scanner.close();
+	}
+		
 }
