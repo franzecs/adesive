@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 
 import org.springframework.util.StringUtils;
@@ -22,6 +23,7 @@ public class AbstractEntity implements Serializable {
 	@Column(length = 100)
 	private String nomeimg;
 	
+	@Lob
 	private String img;
 
 	public Long getCodigo() {
