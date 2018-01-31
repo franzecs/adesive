@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ikytus</groupId>
-	<artifactId>FitnessPoint</artifactId>
+	<artifactId>adesive</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Adhesive</name>
+	<name>Adesive</name>
 	<description>Controle de Serviços Gráficos</description>
 
 	<parent>
