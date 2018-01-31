@@ -14,8 +14,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="iten")
-public class Iten extends AbstractEntity {
+@Table(name="item")
+public class Item extends AbstractEntity {
 	
 	private static final long serialVersionUID = 1L;
 	

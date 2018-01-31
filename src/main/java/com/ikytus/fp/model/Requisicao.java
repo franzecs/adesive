@@ -38,7 +38,7 @@ public class Requisicao extends AbstractEntity{
 	private String condicaopagamento;
 	
 	@OneToMany(mappedBy = "requisicao", cascade=CascadeType.ALL)
-	private List<Iten> itens;
+	private List<Item> items;
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -72,11 +72,11 @@ public class Requisicao extends AbstractEntity{
 		this.condicaopagamento = condicaopagamento;
 	}
 
-	public List<Iten> getItens() {
-		return itens;
+	public List<Item> getItens() {
+		return items;
 	}
 
-	public void setItens(List<Iten> itens) {
-		this.itens = itens;
+	public void setItens(List<Item> items) {
+		this.items = items;
 	}
 }

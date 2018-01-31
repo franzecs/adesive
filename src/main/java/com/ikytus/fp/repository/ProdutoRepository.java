@@ -1,5 +1,7 @@
 package com.ikytus.fp.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -12,5 +14,7 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, L
 	public Page<Produto>findByNomeContainingIgnoreCase(String nome, Pageable pageable);
 	
 	public Page<Produto>findByNomeContainingAndEmpresa(String nome, Empresa empresa, Pageable pageable);
+	
+	public List<Produto>findByEmpresa(Empresa empresa);
 
 }

@@ -24,22 +24,22 @@ import com.ikytus.fp.repository.filter.Filter;
 import com.ikytus.fp.util.Tools;
 import com.ikytus.fp.util.img.GravarImagem;
 import com.ikytus.fp.util.pageable.pageConfig;
-import com.ikytus.fp.repository.ProdutoRepository;
-import com.ikytus.fp.service.ProdutoService;
-import com.ikytus.fp.model.Produto;
+import com.ikytus.fp.repository.RequisicaoRepository;
+import com.ikytus.fp.service.RequisicaoService;
+import com.ikytus.fp.model.Requisicao;
 
 @Controller
 @RequestMapping("requisicoes")
 public class RequisicaoController {
 		
 	@Autowired
-	private ProdutoService produtoService;
+	private RequisicaoService requisicaoService;
 	
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private RequisicaoRepository requisicaoRepository;
 	
 	@Autowired
-	private pageConfig<Produto> pconfig;
+	private pageConfig<Requisicao> pconfig;
 	
 	@Autowired
 	private GravarImagem gravarImagem;
@@ -51,46 +51,46 @@ public class RequisicaoController {
 	public ModelAndView listar(@RequestParam("pageSize") Optional<Integer> pageSize,
 			@RequestParam("page") Optional<Integer> page, @ModelAttribute("filtro") Filter filter, Pageable pageable, String ordem) {
 		
-		Page<Produto> listprodutos = produtoRepository.findByNomeContainingAndEmpresa(
+		Page<Requisicao> listrequisicoes = requisicaoRepository.findByStatusAndEmpresa(
 				Optional.ofNullable(filter.getNome()).orElse("%"), tools.getEmpresa(),
 				pconfig.showPage(pageSize, page, pageable, Optional.ofNullable(ordem).orElse("nome")));
 			
-		return pconfig.montarPagina("administrador/consultaProdutos", listprodutos, filter);
+		return pconfig.montarPagina("administrador/consultaRequisicao", listrequisicoes, filter);
 	}
 	
 	
 	@GetMapping("/novo")
-	public ModelAndView novo(Produto produto){
-		ModelAndView mv = new ModelAndView("administrador/cadastroProdutos");
-		mv.addObject(produto);
+	public ModelAndView novo(Requisicao requisicao){
+		ModelAndView mv = new ModelAndView("administrador/cadastroRequisicao");
+		mv.addObject(requisicao);
 		return mv;
 	}
 	
 	@PostMapping("/novo")
 	public ModelAndView salvar(@RequestParam("file") MultipartFile file, 
-								@Valid Produto produto, BindingResult result, RedirectAttributes atributos){
+								@Valid Requisicao requisicao, BindingResult result, RedirectAttributes atributos){
 		
-		if(result.hasErrors()){return novo(produto);}
-		produto.setEmpresa(tools.getEmpresa());
-		gravarImagem.gravaImagemBase64Service(file, produtoService, produto);
+		if(result.hasErrors()){return novo(requisicao);}
+		requisicao.setEmpresa(tools.getEmpresa());
+		gravarImagem.gravaImagemBase64Service(file, requisicaoService, requisicao);
 		
-		atributos.addFlashAttribute("mensagem","Produto salvo com sucesso!");				
+		atributos.addFlashAttribute("mensagem","Requisicao salva com sucesso!");				
 		
-		return new ModelAndView("redirect:/administrador/produtos/novo").addObject(produto);
+		return new ModelAndView("redirect:/requisicoes/novo").addObject(requisicao);
 	}
 				
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo){
-		Produto produto = produtoRepository.findOne(codigo); 
-		return novo(produto);
+		Requisicao requisicao = requisicaoRepository.findOne(codigo); 
+		return novo(requisicao);
 	}
 	
 	@DeleteMapping("/{codigo}")
 	public ModelAndView deletar(@PathVariable Long codigo, RedirectAttributes atributos){
 		
-		produtoRepository.delete(codigo);
+		requisicaoService.deletar(codigo);
 		
-		atributos.addFlashAttribute("mensagem","Produto removido com sucesso!");
-		return new ModelAndView("redirect:/administrador/produtos");
+		atributos.addFlashAttribute("mensagem","Requisição removida com sucesso!");
+		return new ModelAndView("redirect:/requisicoes");
 	}
 }

@@ -23,6 +23,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
+import com.ikytus.fp.model.converter.EmpresaConverter;
+import com.ikytus.fp.model.converter.ProdutoConverter;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -105,9 +107,9 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	@Bean
 	public FormattingConversionService mvcConversionService() {
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
-		/*conversionService.addConverter(new ExercicioConverter());
-		conversionService.addConverter(new InstrutorConverter());
-		conversionService.addConverter(new AlunoConverter());*/
+		conversionService.addConverter(new EmpresaConverter());
+		conversionService.addConverter(new ProdutoConverter());
+		
 		
 		return conversionService;
 	}
