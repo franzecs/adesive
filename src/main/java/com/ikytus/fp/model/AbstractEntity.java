@@ -23,7 +23,7 @@ public class AbstractEntity implements Serializable {
 	@Column(length = 100)
 	private String nomeimg;
 	
-	@Lob
+	@Column (columnDefinition = "text")
 	private String img;
 
 	public Long getCodigo() {
