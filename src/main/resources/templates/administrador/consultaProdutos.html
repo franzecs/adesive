@@ -63,7 +63,7 @@
 									<a	th:href="@{/administrador/produtos/{codigo}(codigo=${produto.codigo})}" th:text="${produto.nome}"></a>
 								</td>
 								<td	data-label="Descrição" th:text="${produto.descricao}"></td>
-								<td	data-label="Valor" th:text="${produto.valor}"></td>
+								<td	data-label="Valor" th:text="|R$ ${{produto.valor}}|"></td>
 								<td class="text-center" data-label="Excluir">
 									<button type="button" class="btn btn-danger btn-xs btn-block btn-active" >
 										<i	class="fa fa-trash"	style="cursor: pointer"	
@@ -90,19 +90,6 @@
 				</div>
 			<th:block layout:insert="~{layout/fragmentos/pageable :: pageControl ('/administrador/produtos')}"></th:block>
 		</div>
-		<form method="post" class="form-vertical" enctype="multipart/form-data"
-				th:action="@{/administrador/produtos/gravarcsv}">
-				
-				<input type="file" name="file"  capture="camera"/>
-												
-				<div class="col-xs-12">
-					<div class="form-group">
-						<button class="btn  btn-success pull-left sombra-btn" type="submit" 
-								title="Ler arquivo" data-toggle="tooltip">Ler Arquivo</button>
-					</div>
-				</div>
-		</form>
-		
 	</div>
 	<th:block layout:insert="~{layout/fragmentos/parts :: confirmaExclusao (@{/administrador/produtos})}"></th:block>
 </section>

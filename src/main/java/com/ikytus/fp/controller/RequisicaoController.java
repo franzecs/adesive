@@ -14,19 +14,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ikytus.fp.model.Requisicao;
+import com.ikytus.fp.repository.RequisicaoRepository;
 import com.ikytus.fp.repository.filter.Filter;
+import com.ikytus.fp.service.RequisicaoService;
 import com.ikytus.fp.util.Tools;
 import com.ikytus.fp.util.img.GravarImagem;
 import com.ikytus.fp.util.pageable.pageConfig;
-import com.ikytus.fp.repository.RequisicaoRepository;
-import com.ikytus.fp.service.RequisicaoService;
-import com.ikytus.fp.model.Requisicao;
 
 @Controller
 @RequestMapping("requisicoes")
@@ -57,7 +59,6 @@ public class RequisicaoController {
 			
 		return pconfig.montarPagina("administrador/consultaRequisicao", listrequisicoes, filter);
 	}
-	
 	
 	@GetMapping("/novo")
 	public ModelAndView novo(Requisicao requisicao){
@@ -92,5 +93,10 @@ public class RequisicaoController {
 		
 		atributos.addFlashAttribute("mensagem","Requisição removida com sucesso!");
 		return new ModelAndView("redirect:/requisicoes");
+	}
+	
+	@PutMapping("/{codigo}/entregar")
+	public @ResponseBody String entregar(@PathVariable Long codigo) {
+		return requisicaoService.entregar(codigo);
 	}
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -15,6 +17,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.ikytus.fp.model.ENUM.Status;
 
 @Entity
 @Table(name="requisicao")
@@ -31,8 +35,8 @@ public class Requisicao extends AbstractEntity{
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date data;
 			
-	@Column(length=10)
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	@Column(length=80)
 	private String condicaopagamento;
@@ -56,12 +60,20 @@ public class Requisicao extends AbstractEntity{
 		this.data = data;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 	public String getCondicaopagamento() {
@@ -78,5 +90,17 @@ public class Requisicao extends AbstractEntity{
 
 	public void setItens(List<Item> items) {
 		this.items = items;
+	}
+	
+	public boolean isOrcamento() {
+		return Status.ORCAMENTO.equals(this.status);
+	}
+	
+	public boolean isPendente() {
+		return Status.PENDENTE.equals(this.status);
+	}
+	
+	public boolean isCancelado() {
+		return Status.CANCELADO.equals(this.status);
 	}
 }
