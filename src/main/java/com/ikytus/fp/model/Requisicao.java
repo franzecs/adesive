@@ -83,15 +83,7 @@ public class Requisicao extends AbstractEntity{
 	public void setCondicaopagamento(String condicaopagamento) {
 		this.condicaopagamento = condicaopagamento;
 	}
-
-	public List<Item> getItens() {
-		return items;
-	}
-
-	public void setItens(List<Item> items) {
-		this.items = items;
-	}
-	
+		
 	public boolean isOrcamento() {
 		return Status.ORCAMENTO.equals(this.status);
 	}
@@ -102,5 +94,9 @@ public class Requisicao extends AbstractEntity{
 	
 	public boolean isCancelado() {
 		return Status.CANCELADO.equals(this.status);
+	}
+	
+	public boolean isEntregue() {
+		return Status.ENTREGUE.equals(this.status);
 	}
 }

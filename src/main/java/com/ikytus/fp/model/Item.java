@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name="item")
@@ -29,13 +30,15 @@ public class Item extends AbstractEntity {
 	private Produto produto;
 	
 	@Column
+	@NumberFormat(pattern = "#,##0.00")
 	private Double  valorunitario;
 		
 	@Column
 	private int quantidade;
 	
 	@Column
-	private Double  valortotal;
+	@NumberFormat(pattern = "#,##0.00")
+	private Double valortotal;
 
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -80,9 +83,7 @@ public class Item extends AbstractEntity {
 	}
 
 	public Double getValortotal() {
-		
 		valortotal = valorunitario * quantidade;
-		
 		return valortotal;
 	}
 

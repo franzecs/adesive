@@ -1,5 +1,7 @@
 package com.ikytus.fp.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -10,4 +12,6 @@ import com.ikytus.fp.model.Requisicao;
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 	
 	public Page<Item>findByRequisicao(Requisicao requisicao, Pageable pageable);
+
+	public List<Item>findByRequisicao(Requisicao requisicao);
 }

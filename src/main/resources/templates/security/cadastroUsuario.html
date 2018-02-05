@@ -55,16 +55,6 @@
 							</select>
 						</div>
 					</div>
-					<!-- <div class="col-xs-12 col-sm-3 col-md-3" sec:authorize="hasRole('ADMLOC')">
-						<div class="form-group" th:classappend="${#fields.hasErrors('empresa')} ? has-error">
-							<label class="input-group-addon control-label">Empresa</label>
-							<select id="instrutor" class="form-control" th:field="*{empresa}">
-								<option value="">Selecione a Empresa</option>
-								<option th:each="empresa : ${empresasClientes}" th:value="${empresa.codigo}"
-									th:text="${empresa.nome}"></option>
-							</select>
-						</div>
-					</div> -->
 					
 					<th:block layout:insert="~{layout/fragmentos/selects :: setores}"></th:block>
 					<br>

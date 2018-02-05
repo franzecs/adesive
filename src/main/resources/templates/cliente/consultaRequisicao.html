@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<section layout:fragment="conteudo">
+		<div class="panel panel-primary">
+			<div class="panel-heading sombra">
+				<h2 class="panel-title text-center"><strong>Requisições Cadastradas</strong>
+					<a  class="btn btn-info sombra-btn pull-right" style="margin:-8px -12px;" 
+						th:href="@{/requisicoes/novo}" 
+						title="Nova Requisição" data-toggle="tooltip" data-placement="bottom"
+						sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')"> 
+								<i class="fa  fa-fw  fa-plus"></i> 
+					</a>
+				</h2>
+			</div>
+			<div class="panel-body">
+				<div class="container-fluid">
+					
+					<th:block layout:insert="~{layout/fragmentos/alertas :: success}"></th:block>
+					
+					<div class="col-xs-12">
+					
+						<th:block layout:insert="~{layout/fragmentos/pageable :: pageSelect ('/requisicoes')}"></th:block>
+						
+						<div class="col-xs-6">
+							<form method="GET" class="form-horizontal" action="/requisicoes" th:object="${filtro}" >
+					   			<div class="form-group">
+					   				<div class="col-xs-6 pull-right" style="margin:-8px -12px;">
+					   					<div class="input-group">
+					   						<input class="form-control" id="filtro" placeholder="Nome do cliente"
+					   							autofocus="autofocus" th:field="*{nome}"></input>
+					   						<input type="hidden" name="pageSize"  th:value="${selectedPageSize}"/>
+					   						<span class="input-group-btn">
+					   							<button type="submit" class="btn btn-default">
+					   								<i class="glyphicon glyphicon-search"></i>
+					   							</button>
+					   						</span>
+					   					</div>
+					   				</div>
+					   			</div>
+					   		</form>
+			   			</div>
+					</div>
+					<table	id="tabela-requisicoes" class="table  table-striped  
+						table-bordered  table-hover  table-condensed table-reflow">
+						<thead class="aw-table-header-solid">
+							<tr>
+								<th>Código</th>
+								<th>Empresa</th>
+								<th>Data</th>
+								<th>Pagamento</th>
+								<th>Status</th>
+								<th class="ik-table-col-icons"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="requisicao : ${lista}">
+								<td data-label="Código" >
+									<a	th:href="@{/requisicoes/{codigo}(codigo=${requisicao.codigo})}" th:text="${requisicao.codigo}"></a>
+								</td>
+								<td data-label="Empresa" th:text="${requisicao.empresa.nome}"></td>
+								<td data-label="Data" th:text="${{requisicao.data}}"></td>
+								<td	data-label="Pagamento" th:text="${requisicao.condicaopagamento}"></td>
+								<td	data-label="Status" class="text-center">
+									<span class="label"	th:text="${requisicao.status}"
+									th:classappend="|${requisicao.pendente ? 'label-warning':''} 
+													 ${requisicao.cancelado ? 'label-danger':''}
+													 ${requisicao.entregue ? 'label-success':''}|"></span>
+								</td>
+								<td class="text-center" data-label="Excluir">
+									<button type="button" class="btn btn-danger btn-xs btn-block btn-active" >
+										<i	class="fa fa-trash"	style="cursor: pointer"	
+											data-toggle="modal"	
+											data-target="#confirmaExclusaoModal"
+											data:nome="${requisicao.codigo}"
+											data:url-apagar="@{/requisicoes/{codigo}(codigo=${requisicao.codigo})}">
+										</i>
+									</button>
+								</td>
+							</tr>
+							<tr th:if="${lista.getTotalElements()==0}">
+								<td	colspan="6"	class="bg-danger">Nenhuma requisição cadastrada</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td	colspan="6"	class="bg-primary text-center">
+									<strong><span th:text="'Total de Registros: ' + ${lista.getTotalElements()}"></span></strong>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			<th:block layout:insert="~{layout/fragmentos/pageable :: pageControl ('/requisicoes')}"></th:block>
+		</div>
+	</div>
+	<th:block layout:insert="~{layout/fragmentos/parts :: confirmaExclusao (@{/requisicoes})}"></th:block>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/layout/js/pageable.js}"></script>
+	<script th:src="@{/layout/js/jquery.btechco.excelexport.js}"></script>
+	<script th:src="@{/layout/js/jquery.base64.js}"></script>
+	<script>
+	    $(document).ready(function () {
+	        $("#btnDownload").click(function () {
+	            $("#tabela-requisicao").btechco_excelexport({
+	                containerid: "tabela-requisicao"
+	               , datatype: $datatype.Table
+	               , filename: 'tabela-requisicao'
+	            });
+	        });
+	    });
+	</script>
+</th:block>
+</html> 
