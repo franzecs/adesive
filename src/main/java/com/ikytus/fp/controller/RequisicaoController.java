@@ -1,9 +1,5 @@
 package com.ikytus.fp.controller;
 
-import java.sql.Date;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -60,14 +56,14 @@ public class RequisicaoController {
 		if(filter.getStatus()==null) {
 			Page<Requisicao> listrequisicoes = requisicaoRepository.findByEmpresa(tools.getEmpresa(), 
 					pconfig.showPage(pageSize, page, pageable, Optional.ofNullable(ordem).orElse("empresa")));
-			return pconfig.montarPagina("cliente/consultaRequisicao", listrequisicoes, filter);
+			return pconfig.montarPagina("cliente/consultaRequisicao", listrequisicoes, filter).addObject("listaStatus", Status.values());
 		}
 		
 		Page<Requisicao> listrequisicoes = requisicaoRepository.findByEmpresaAndStatus(
 				tools.getEmpresa(), filter.getStatus(), 
 				pconfig.showPage(pageSize, page, pageable, Optional.ofNullable(ordem).orElse("empresa")));
 			
-		return pconfig.montarPagina("cliente/consultaRequisicao", listrequisicoes, filter);
+		return pconfig.montarPagina("cliente/consultaRequisicao", listrequisicoes, filter).addObject("listaStatus", Status.values());
 	}
 	
 	@GetMapping("/novo")
@@ -75,15 +71,12 @@ public class RequisicaoController {
 		ModelAndView mv = new ModelAndView("cliente/cadastroRequisicao");
 		
 		if(requisicao.getCodigo()==null) {
-			requisicao.setData(Date.valueOf(LocalDate.now()));
-			requisicao.setEmpresa(tools.getEmpresa());
-			requisicao.setStatus(Status.PENDENTE);
+    		requisicao = requisicaoService.novaRequisicao(requisicao, tools.getEmpresa());
 		}
 		
 		if(requisicao.getCodigo() != null){
 			mv.addObject("listaItens", requisicao.getItems());
-			mv.addObject("valor",NumberFormat.getCurrencyInstance().format(requisicao.getItems().stream()
-					.mapToDouble(p ->p.getValortotal()).sum()));
+			mv.addObject("valor", requisicao.getValor());
 		}
 		
 		mv.addObject("listaStatus", Status.values());
@@ -120,5 +113,30 @@ public class RequisicaoController {
 	@PutMapping("/{codigo}/entregar")
 	public @ResponseBody String entregar(@PathVariable Long codigo) {
 		return requisicaoService.entregar(codigo);
+	}
+	
+	@GetMapping("/administrador")
+	public ModelAndView listAdm(@RequestParam("pageSize") Optional<Integer> pageSize,
+			@RequestParam("page") Optional<Integer> page, @ModelAttribute("filtro") Filter filter, Pageable pageable, String ordem) {
+		
+		if(filter.getStatus()==null) {
+			Page<Requisicao> listrequisicoes = requisicaoRepository.findByEmpresaFornecedorAndEmpresaNomeContainingIgnoreCase(tools.getEmpresa(), 
+					Optional.ofNullable(filter.getNome()).orElse("%"),
+					pconfig.showPage(pageSize, page, pageable, Optional.ofNullable(ordem).orElse("empresa")));
+
+			return pconfig.montarPagina("administrador/consultaRequisicoes", listrequisicoes, filter)
+					.addObject("listaStatus", Status.values())
+					.addObject("empresas", empresaRepository.findAll());
+		}
+		
+		Page<Requisicao> listrequisicoes = requisicaoRepository.findByEmpresaFornecedorAndStatusAndEmpresaNomeContainingIgnoreCase(
+				tools.getEmpresa(), filter.getStatus(), Optional.ofNullable(filter.getNome()).orElse("%"), 
+				pconfig.showPage(pageSize, page, pageable, Optional.ofNullable(ordem).orElse("empresa")));
+			
+		return pconfig.montarPagina("administrador/consultaRequisicoes", listrequisicoes, filter)
+				.addObject("listaStatus", Status.values())
+				.addObject("empresas", empresaRepository.findAll());
+		
+		
 	}
 }

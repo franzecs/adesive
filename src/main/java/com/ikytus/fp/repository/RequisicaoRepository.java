@@ -15,5 +15,11 @@ public interface RequisicaoRepository extends PagingAndSortingRepository<Requisi
 	public Page<Requisicao>findByEmpresaAndStatus(Empresa empresa, Status status, Pageable pageable);
 	
 	public Page<Requisicao>findByEmpresa(Empresa empresa, Pageable pageable);
+		
+	public Page<Requisicao>findByEmpresaFornecedorAndEmpresaNomeContainingIgnoreCase(Empresa fornecedor, String empresa, Pageable pageable);
+	
+	public Page<Requisicao>findByEmpresaFornecedorAndStatusAndEmpresaNomeContainingIgnoreCase(Empresa fornecedor, Status status, String empresa, Pageable pageable);
+	
+	public Requisicao findByCodigo(Long codigo);
 
 }

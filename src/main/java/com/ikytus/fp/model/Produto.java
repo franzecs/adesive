@@ -1,7 +1,5 @@
 package com.ikytus.fp.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,7 +32,7 @@ public class Produto extends AbstractEntity {
 	@NotNull(message = "Valor é obrigatório")
 	@DecimalMin(value = "0.01", message = "Valor não pode ser menor que 0,01")
 	@NumberFormat(pattern = "#,##0.00")
-	private BigDecimal valor;
+	private Double valor;
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -60,11 +58,11 @@ public class Produto extends AbstractEntity {
 		this.descricao = descricao;
 	}
 
-	public BigDecimal getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(BigDecimal valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

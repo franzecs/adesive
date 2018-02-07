@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{layout/LayoutPadrao}">
+
+<section layout:fragment="conteudo">
+	<div class="panel panel-primary">
+		
+		<div class="panel-heading sombra">
+			<h2 class="panel-title text-center"><strong>Cadastro de item</strong></h2>
+		</div>
+		
+		<div class="panel-body">
+			<div class="container-fluid">
+
+				<th:block layout:insert="~{layout/fragmentos/alertas :: success}"></th:block>
+
+				<form method="post" class="form-vertical  js-form-loading" th:object="${item}" th:action="@{/itens/novo}">
+					
+					<th:block layout:insert="~{layout/fragmentos/alertas :: validation}"></th:block>
+														
+					<input type="hidden" th:field="*{codigo}"/>
+					
+					<input type="hidden" th:field="*{requisicao}" th:value="${codigoRequisicao}"/>
+					<input type="hidden" th:name="codigoRequisicao" th:value="${codigoRequisicao}"/>					
+					
+					<div class="col-xs-12 col-sm-5 col-md-5">
+						<div class="form-group" th:classappend="${#fields.hasErrors('produto')} ? has-error">
+							<label class="input-group-addon control-label">Produto</label>
+							<select id="produto" class="form-control" th:field="*{produto}">
+								<option value="">Selecione o Produto</option>
+								<option th:each="produto : ${listaProdutos}" th:value="${produto.codigo}"
+									th:text="|${produto.nome} - ${produto.descricao} |"></option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-1 col-md-1 componenteform">
+						<div class="form-group"  sec:authorize="hasRole('CLIENTES')">
+							<label class="input-group-addon control-label">Vr. Unit</label>
+							<input id="produto" type="text" class="form-control js-currency" th:field="*{valorunitario}" disabled="disabled"/>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('valorunitario')} ? has-error" sec:authorize="hasRole('ADMLOC')">
+							<label class="input-group-addon control-label">Vr. Unit</label>
+							<input id="produto" type="text" class="form-control js-currency" th:field="*{valorunitario}" />
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-1 col-md-1 componenteform">
+						<div class="form-group" th:classappend="${#fields.hasErrors('quantidade')} ? has-error">
+							<label class="input-group-addon control-label">Qtd.</label>
+							<input id="quantidade" type="number" class="form-control" th:field="*{quantidade}" />
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-1 col-md-1 componenteform">
+						<div class="form-group">
+							<label class="input-group-addon control-label">Vr. Total</label>
+							<input id="produto" type="text" class="form-control js-currency" th:field="*{valortotal}" disabled="disabled"/>
+						</div>
+					</div>
+						
+					<div class="col-xs-12 col-sm-2 col-md-2">
+						<div class="form-group" sec:authorize="hasRole('CLIENTES')">
+							<label class="input-group-addon control-label">Entrega:</label> 
+							<input id="entrega" type="text" class="form-control" th:field="*{{dataentrega}}" disabled="disabled"	/>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('dataentrega')} ? has-error" sec:authorize="hasRole('ADMLOC')">
+							<label class="input-group-addon control-label">Entrega:</label> 
+							<input id="entrega" type="text" class="form-control" th:field="*{dataentrega}"
+								   data-provide="datepicker" data-format="dd/mm/yyyy" data-date-language="pt-BR"
+								   data-date-autoclose="true" data-date-today-Highlight="true" 	/>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2 col-md-2 componenteform">
+						<div class="form-group" th:classappend="${#fields.hasErrors('setor')} ? has-error">
+							<label class="input-group-addon control-label">setor</label>
+							<input id="setor" type="text" class="form-control" th:field="*{setor}" />
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 componenteform">
+						<div class="form-group" th:classappend="${#fields.hasErrors('observacao')} ? has-error">
+							<label class="input-group-addon control-label">Observação</label>
+							<input id="observacao" type="text" class="form-control" th:field="*{observacao}" />
+						</div>
+					</div>
+																														
+					<div class="col-xs-12">
+						<div class="form-group">
+							<button class="btn  btn-success pull-left sombra-btn" type="submit" title="Salvar Exercício" data-toggle="tooltip">Salvar</button>
+							<a class="btn btn-info pull-right sombra-btn" th:href="@{/requisicoes/{codigo}(codigo=${codigoRequisicao})}" title="voltar" data-toggle="tooltip"> 
+								<i class="fa  fa-reply"></i> 
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/layout/js/VisualizarImagem.js}"></script>
+</th:block>
+</html>

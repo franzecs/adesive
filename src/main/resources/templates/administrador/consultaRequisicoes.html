@@ -23,23 +23,31 @@
 					
 					<div class="col-xs-12">
 					
-						<th:block layout:insert="~{layout/fragmentos/pageable :: pageSelect ('/requisicoes')}"></th:block>
+						<th:block layout:insert="~{layout/fragmentos/pageable :: pageSelect ('/requisicoes/administrador')}"></th:block>
 						
 						<div class="col-xs-6">
-							<form method="GET" class="form-horizontal" action="/requisicoes" th:object="${filtro}" >
+							<form method="GET" class="form-horizontal" action="/requisicoes/administrador" th:object="${filtro}" >
 					   			<div class="form-group">
-					   				<div class="col-xs-6 pull-right" style="margin:-8px -12px;">
+					   				<div class="col-xs-6" style="margin:-8px -12px;">
 					   					<div class="input-group">
 					   						<span class="input-group-btn">
 					   							<button type="button" class="btn btn-default">Status</button>
 					   						</span>
 											<select id="status" class="form-control" th:field="*{status}">
-												<option value="">todos</option>
+												<option value="">Todos</option>
 												<option th:each="status : ${listaStatus}" th:value="${status}"
 													th:text="${status.descricao}"></option>
 											</select>
-											<input type="hidden" name="pageSize"  th:value="${selectedPageSize}"/>
-					   						<span class="input-group-btn">
+										</div>
+				   					</div>
+				   					<div class="col-xs-6 pull-right" style="margin:-8px -12px;">
+					   					<div class="input-group">
+											<select id="status" class="form-control" th:field="*{nome}">
+												<option value="">Empresas</option>
+												<option th:each="empresa : ${empresas}" th:value="${empresa.nome}"
+													th:text="${empresa.nome}"></option>
+											</select>
+											<span class="input-group-btn">
 					   							<button type="submit" class="btn btn-default">
 					   								<i class="glyphicon glyphicon-search"></i>
 					   							</button>
@@ -102,7 +110,7 @@
 						</tfoot>
 					</table>
 				</div>
-			<th:block layout:insert="~{layout/fragmentos/pageable :: pageControl ('/requisicoes')}"></th:block>
+			<th:block layout:insert="~{layout/fragmentos/pageable :: pageControl ('/requisicoes/administrador')}"></th:block>
 		</div>
 	</div>
 	<th:block layout:insert="~{layout/fragmentos/parts :: confirmaExclusao (@{/requisicoes})}"></th:block>

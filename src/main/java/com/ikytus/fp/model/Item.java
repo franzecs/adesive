@@ -83,6 +83,9 @@ public class Item extends AbstractEntity {
 	}
 
 	public Double getValortotal() {
+		if(valorunitario==null) {
+			return 0.00;
+		}
 		valortotal = valorunitario * quantidade;
 		return valortotal;
 	}

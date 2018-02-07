@@ -45,6 +45,14 @@ public class Tools {
 		return grupoRepository.findByNome("ROLE_MASTERROOT");
 	}
 	
+	public Grupo getGrupoAdmLoc() {
+		return grupoRepository.findByNome("ROLE_ADMLOC");
+	}
+	
+	public Grupo getGrupoClientes() {
+		return grupoRepository.findByNome("ROLE_CLIENTES");
+	}
+	
 	public Empresa getEmpresa(){
 		return  getUsuario().getEmpresa();
 	}

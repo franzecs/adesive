@@ -2,7 +2,6 @@ package com.ikytus.fp.model.ENUM;
 
 public enum Status {
 	
-	ORCAMENTO("Orçamento"),
 	PENDENTE("Pendente"), 
 	ENTREGUE("Entregue"),
 	CANCELADO("Cancelado");

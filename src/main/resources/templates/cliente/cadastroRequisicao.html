@@ -31,19 +31,21 @@
 									th:text="${empresa.nome}"></option>
 							</select>
 						</div>
-						<div class="bg-success text-center" sec:authorize="hasRole('CLIENTE')">
+						<div class="bg-success text-center" sec:authorize="hasRole('CLIENTES')">
 							<strong><span th:text="*{empresa.nome}"></span></strong>
+							<input type="hidden" th:field="*{empresa}"/>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-2 col-md-2">
 						<div class="form-group" th:classappend="${#fields.hasErrors('data')} ? has-error" sec:authorize="hasRole('ADMLOC')">
 							<label class="input-group-addon control-label">Data:</label> 
-							<input id="datanascimento" type="text" class="form-control" th:field="*{data}"
+							<input id="data" type="text" class="form-control" th:field="*{data}"
 								   data-provide="datepicker" data-format="dd/mm/yyyy" data-date-language="pt-BR"
 								   data-date-autoclose="true" data-date-today-Highlight="true" 	/>
 						</div>
-						<div class="bg-info" sec:authorize="hasRole('CLIENTE')">
+						<div class="bg-info" sec:authorize="hasRole('CLIENTES')">
 							<span th:text="|Data: *{{data}}|"></span>
+							<input type="hidden" th:field="*{data}"/>
 						</div>
 					</div>
 										
@@ -52,8 +54,9 @@
 							<label class="input-group-addon control-label">Pagamento</label>
 							<input id="pagamento" type="text" class="form-control" th:field="*{condicaopagamento}" />
 						</div>
-						<div class="bg-primary" sec:authorize="hasRole('CLIENTE')">
+						<div class="bg-primary" sec:authorize="hasRole('CLIENTES')">
 							<span th:text="|Condição de Pagamento: *{condicaopagamento}|"></span>
+							<input type="hidden" th:field="*{condicaopagamento}"/>
 						</div>
 					</div>
 					
@@ -66,15 +69,19 @@
 									th:text="${status.descricao}"></option>
 							</select>
 						</div>
-						<div class="bg-danger" sec:authorize="hasRole('CLIENTE')">
+						<div class="bg-danger" sec:authorize="hasRole('CLIENTES')">
 							<span th:text="|Status: *{status}|"></span>
+							<input type="hidden" th:field="*{status}"/>
 						</div>
 					</div>
 															
 					<div class="col-xs-12">
 						<div class="form-group">
 							<button class="btn  btn-success pull-left sombra-btn" type="submit" title="Salvar Exercício" data-toggle="tooltip">Salvar</button>
-							<a class="btn btn-info pull-right sombra-btn" th:href="@{/requisicoes}" title="voltar" data-toggle="tooltip"> 
+							<a class="btn btn-info pull-right sombra-btn" th:href="@{/requisicoes}" title="voltar" data-toggle="tooltip" sec:authorize="hasRole('CLIENTES')"> 
+								<i class="fa  fa-reply"></i> 
+							</a>
+							<a class="btn btn-info pull-right sombra-btn" th:href="@{/requisicoes/administrador}" title="voltar" data-toggle="tooltip" sec:authorize="hasRole('ADMLOC')"> 
 								<i class="fa  fa-reply"></i> 
 							</a>
 						</div>
@@ -89,8 +96,9 @@
 					<form method="get" class="form-vertical" th:object="${requisicao}" th:action="@{/itens/novo}">
 							
 							<input type="hidden" th:name="codigoRequisicao" th:value="${requisicao.codigo}"/>
+							
 							<button class="btn btn-info sombra-btn pull-right" type="submit" style="margin:-26px -13px;"
-									title="Novo item" data-toggle="tooltip">
+									title="Novo item" data-toggle="tooltip" th:if="${not #strings.isEmpty(requisicao.codigo)}">
 									<i class="fa  fa-fw  fa-plus"></i>
 							</button>
 					</form>

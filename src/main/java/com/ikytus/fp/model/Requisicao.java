@@ -1,5 +1,6 @@
 package com.ikytus.fp.model;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,12 @@ public class Requisicao extends AbstractEntity{
 	
 	@OneToMany(mappedBy = "requisicao", cascade=CascadeType.ALL)
 	private List<Item> items;
+	
+	public String getValor() {
+		String valor = NumberFormat.getCurrencyInstance().format(getItems().stream()
+				.mapToDouble(p ->p.getValortotal()).sum());
+		return valor;
+	}
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -83,11 +90,7 @@ public class Requisicao extends AbstractEntity{
 	public void setCondicaopagamento(String condicaopagamento) {
 		this.condicaopagamento = condicaopagamento;
 	}
-		
-	public boolean isOrcamento() {
-		return Status.ORCAMENTO.equals(this.status);
-	}
-	
+			
 	public boolean isPendente() {
 		return Status.PENDENTE.equals(this.status);
 	}

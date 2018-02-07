@@ -1,7 +1,12 @@
 package com.ikytus.fp.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ikytus.fp.model.Empresa;
 import com.ikytus.fp.model.Requisicao;
 import com.ikytus.fp.model.ENUM.Status;
 import com.ikytus.fp.repository.RequisicaoRepository;
@@ -23,6 +28,13 @@ public class RequisicaoService implements AbstractService<Requisicao>{
 	
 	public void deletar(Long codigo) {
 		requisicaoRepository.delete(codigo);
+	}
+	
+	public Requisicao novaRequisicao(Requisicao requisicao, Empresa empresa ) {
+		requisicao.setData(Date.valueOf(LocalDate.now()));
+		requisicao.setEmpresa(empresa);
+		requisicao.setStatus(Status.PENDENTE);
+		return requisicao;
 	}
 	
 	public String entregar(Long codigo) {
