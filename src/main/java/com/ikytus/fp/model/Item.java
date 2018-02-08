@@ -121,6 +121,9 @@ public class Item extends AbstractEntity {
 	}
 	
 	public boolean isEntregue() {
+		if(requisicao==null) {
+			return false;
+		}
 		return Status.ENTREGUE.equals(this.requisicao.getStatus());
 	}
 }
