@@ -18,4 +18,12 @@ public class UsuarioSistema extends User {
 	public Usuario getUsuario() {
 		return usuario;
 	}
+	
+	public String getPermissao() {
+		String gr="";
+		for(Grupo grupo : usuario.getGrupos()) {
+			 gr = grupo.getNome();
+		}
+		return gr;
+	}
 }

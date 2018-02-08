@@ -22,8 +22,8 @@
 														
 					<input type="hidden" th:field="*{codigo}"/>
 					
-					<div class="col-xs-12 col-sm-12 col-md-12">
-						<div class="form-group" th:classappend="${#fields.hasErrors('empresa')} ? has-error" sec:authorize="hasRole('ADMLOC')">
+					<div class="col-xs-12 col-sm-12 col-md-12" th:classappend="${#authentication.principal.getPermissao()== 'ROLE_CLIENTES' ? 'disabled':'' }">
+						<div class="form-group" th:classappend="${#fields.hasErrors('empresa')} ? has-error">
 							<label class="input-group-addon control-label">Empresa</label>
 							<select id="instrutor" class="form-control" th:field="*{empresa}">
 								<option value="">Selecione a Empresa</option>
@@ -31,37 +31,25 @@
 									th:text="${empresa.nome}"></option>
 							</select>
 						</div>
-						<div class="bg-success text-center" sec:authorize="hasRole('CLIENTES')">
-							<strong><span th:text="*{empresa.nome}"></span></strong>
-							<input type="hidden" th:field="*{empresa}"/>
-						</div>
 					</div>
-					<div class="col-xs-12 col-sm-2 col-md-2">
-						<div class="form-group" th:classappend="${#fields.hasErrors('data')} ? has-error" sec:authorize="hasRole('ADMLOC')">
+					<div class="col-xs-12 col-sm-2 col-md-2" th:classappend="${#authentication.principal.getPermissao()== 'ROLE_CLIENTES' ? 'disabled':'' }">
+						<div class="form-group" th:classappend="${#fields.hasErrors('data')} ? has-error" >
 							<label class="input-group-addon control-label">Data:</label> 
 							<input id="data" type="text" class="form-control" th:field="*{data}"
 								   data-provide="datepicker" data-format="dd/mm/yyyy" data-date-language="pt-BR"
 								   data-date-autoclose="true" data-date-today-Highlight="true" 	/>
 						</div>
-						<div class="bg-info" sec:authorize="hasRole('CLIENTES')">
-							<span th:text="|Data: *{{data}}|"></span>
-							<input type="hidden" th:field="*{data}"/>
-						</div>
 					</div>
 										
-					<div class="col-xs-12 col-sm-8 col-md-8 componenteform">
-						<div class="form-group" th:classappend="${#fields.hasErrors('condicaopagamento')} ? has-error" sec:authorize="hasRole('ADMLOC')">
+					<div class="col-xs-12 col-sm-8 col-md-8 componenteform" th:classappend="${#authentication.principal.getPermissao()== 'ROLE_CLIENTES' ? 'disabled':'' }">
+						<div class="form-group" th:classappend="${#fields.hasErrors('condicaopagamento')} ? has-error">
 							<label class="input-group-addon control-label">Pagamento</label>
 							<input id="pagamento" type="text" class="form-control" th:field="*{condicaopagamento}" />
 						</div>
-						<div class="bg-primary" sec:authorize="hasRole('CLIENTES')">
-							<span th:text="|Condição de Pagamento: *{condicaopagamento}|"></span>
-							<input type="hidden" th:field="*{condicaopagamento}"/>
-						</div>
 					</div>
 					
-					<div class="col-xs-12 col-sm-2 col-md-2">
-						<div class="form-group" th:classappend="${#fields.hasErrors('status')} ? has-error" sec:authorize="hasRole('ADMLOC')">
+					<div class="col-xs-12 col-sm-2 col-md-2" th:classappend="${#authentication.principal.getPermissao()== 'ROLE_CLIENTES' ? 'disabled':'' }">
+						<div class="form-group" th:classappend="${#fields.hasErrors('status')} ? has-error">
 							<label class="input-group-addon control-label">Status</label>
 							<select id="status" class="form-control" th:field="*{status}">
 								<option value="">Selecione</option>
@@ -69,15 +57,11 @@
 									th:text="${status.descricao}"></option>
 							</select>
 						</div>
-						<div class="bg-danger" sec:authorize="hasRole('CLIENTES')">
-							<span th:text="|Status: *{status}|"></span>
-							<input type="hidden" th:field="*{status}"/>
-						</div>
 					</div>
 															
 					<div class="col-xs-12">
 						<div class="form-group">
-							<button class="btn  btn-success pull-left sombra-btn" type="submit" title="Salvar Exercício" data-toggle="tooltip">Salvar</button>
+							<button class="btn  btn-success pull-left sombra-btn" type="submit" title="Salvar Requisição" data-toggle="tooltip">Salvar</button>
 							<a class="btn btn-info pull-right sombra-btn" th:href="@{/requisicoes}" title="voltar" data-toggle="tooltip" sec:authorize="hasRole('CLIENTES')"> 
 								<i class="fa  fa-reply"></i> 
 							</a>
@@ -98,7 +82,7 @@
 							<input type="hidden" th:name="codigoRequisicao" th:value="${requisicao.codigo}"/>
 							
 							<button class="btn btn-info sombra-btn pull-right" type="submit" style="margin:-26px -13px;"
-									title="Novo item" data-toggle="tooltip" th:if="${not #strings.isEmpty(requisicao.codigo)}">
+									title="Novo item" data-toggle="tooltip" th:if="${not #strings.isEmpty(requisicao.codigo) and !requisicao.entregue}">
 									<i class="fa  fa-fw  fa-plus"></i>
 							</button>
 					</form>
@@ -116,19 +100,23 @@
 								<th>Quantidade</th>
 								<th>Vr. Total</th>
 								<th>Entrega</th>
-								<th	class="ik-table-col-icons hidden-xs"></th>
+								<th	class="hidden-xs"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="item : ${listaItens}">
-								<td	class="text-center" data-label="Produto"><a th:href="@{/itens/{codigo}(codigo=${item.codigo})}" 
-									th:text="${item.produto.nome}"></a></td>
+								<td	class="text-center" th:text="${item.produto.nome}" data-label="Produto"></td>
 								<td	class="text-center" th:text="|R$ ${{item.valorunitario}}|" data-label="Vr. Unit"></td>
 								<td	class="text-center" th:text="${item.quantidade}" data-label="Quantidade"></td>
 								<td	class="text-center" th:text="|R$ ${{item.valortotal}}|" data-label="Vr. Total"></td>
 								<td	class="text-center" th:text="${{item.dataentrega}}" data-label="Vr. Total"></td>
-								<td class="text-center ik-table-col-codigo hidden-xs" style="vertical-align: middle;">
-									<button	type="button" class="btn btn-danger btn-xs btn-block btn-active hidden-xs">
+								<td class="text-center hidden-xs" style="vertical-align: middle;">
+									<a class="btn btn-xs btn-info btn-active"
+										th:href="@{/itens/{codigo}(codigo=${item.codigo})}" title="Editar" data-toggle="tooltip"> 
+										<i class="fa  fa-pencil"></i> 
+									</a>
+									
+									<button	type="button" class="btn btn-xs btn-danger btn-active" title="Deletar" data-toggle="tooltip" th:if="${!requisicao.entregue}">
 										<i 	class="fa fa-trash" style="cursor: pointer" 
 											data-toggle="modal"
 											data-target="#confirmaExclusaoModal" 

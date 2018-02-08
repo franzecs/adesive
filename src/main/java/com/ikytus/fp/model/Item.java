@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import com.ikytus.fp.model.ENUM.Status;
+
 @Entity
 @Table(name="item")
 public class Item extends AbstractEntity {
@@ -116,5 +118,9 @@ public class Item extends AbstractEntity {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+	
+	public boolean isEntregue() {
+		return Status.ENTREGUE.equals(this.requisicao.getStatus());
 	}
 }

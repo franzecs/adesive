@@ -8,8 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class GeraSenha {
 			
 	public static void main(String[] args) throws UnknownHostException, MalformedURLException{
-		Tools tools = new Tools();
-		System.out.println(tools.getIp());
 		System.out.println(new BCryptPasswordEncoder().encode("123"));
 	}
 
