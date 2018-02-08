@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     public String handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addFlashAttribute("erro", "ERRO AO TENTAR ATUALIZAR IMAGEM: " +"("+ e.getCause().getMessage()+")");
-        return "redirect:/gip/500";
+        return "redirect:/500";
 
     }
 

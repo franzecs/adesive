@@ -1,6 +1,8 @@
 package com.ikytus.fp.config;
 
 import org.springframework.beans.BeansException;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -100,6 +103,14 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		return resolver;
 	}
 	
+	@Bean
+	public EmbeddedServletContainerCustomizer containerCustomizer() {
+		return (container ->
+		container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"),
+							new ErrorPage(HttpStatus.FORBIDDEN, "/403"),
+							new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/500")));
+	}
+	
 	  /* **************** */
      /*  CONVERSORES     */
     /* **************** */
@@ -109,8 +120,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
 		conversionService.addConverter(new EmpresaConverter());
 		conversionService.addConverter(new ProdutoConverter());
-		
-		
+				
 		return conversionService;
 	}
 	

@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/layout/**").antMatchers("/webjars/**");
+		web.ignoring().antMatchers("/layout/**").antMatchers("/webjars/**").antMatchers("/error/**");
 	}
 
 	@Bean
