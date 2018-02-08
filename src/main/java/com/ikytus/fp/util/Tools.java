@@ -1,12 +1,17 @@
 package com.ikytus.fp.util;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,6 +27,11 @@ public class Tools {
 	
 	@Autowired
 	private GrupoRepository grupoRepository;
+	
+	
+	public Tools() {
+		
+	}
 	
 	public Usuario getUsuario(){
 			Authentication authentication = (Authentication) SecurityContextHolder.getContext().getAuthentication(); 
@@ -74,6 +84,13 @@ public class Tools {
 			}
 		}
 		scanner.close();
+	}
+	
+	@Bean
+	public String getIp(String ip) throws UnknownHostException, MalformedURLException {
+		
+		InetAddress address = InetAddress.getByName(new URL(ip).getHost());
+		return address.getHostAddress();
 	}
 		
 }
