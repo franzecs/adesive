@@ -87,10 +87,15 @@ public class Tools {
 	}
 	
 	@Bean
-	public String getIp(String ip) throws UnknownHostException, MalformedURLException {
+	public String getIp() throws UnknownHostException, MalformedURLException {
 		
-		InetAddress address = InetAddress.getByName(new URL(ip).getHost());
-		return address.getHostAddress();
+		/*InetAddress address = InetAddress.getByName(new URL(ip).getHost());
+		return address.getHostAddress();*/
+		URL url = new URL("http://ik-gip.ddns.net/");
+		System.out.println(url.getHost());
+		InetAddress address = InetAddress.getByName(url.getHost());
+		System.out.println(address.toString());
+		return address.toString();
 	}
 		
 }
