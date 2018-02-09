@@ -1,6 +1,6 @@
 package com.ikytus.fp.model;
 
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,9 +45,13 @@ public class Requisicao extends AbstractEntity{
 	@OneToMany(mappedBy = "requisicao", cascade=CascadeType.ALL)
 	private List<Item> items;
 	
+	
 	public String getValor() {
-		String valor = NumberFormat.getCurrencyInstance().format(getItems().stream()
-				.mapToDouble(p ->p.getValortotal()).sum());
+		 DecimalFormat df = new DecimalFormat("#,##0.00");
+
+         String valor = df.format(getItems().stream()
+ 				.mapToDouble(p ->p.getValortotal()).sum());
+				
 		return valor;
 	}
 
