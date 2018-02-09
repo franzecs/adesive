@@ -50,18 +50,20 @@
 					table-bordered  table-hover  table-condensed table-reflow responsive-table">
 					<thead class="aw-table-header-solid">
 						<tr>
-							<th>Empresa</th>
+							<th>User</th>
 							<th>Nome</th>
+							<th>Empresa</th>
 							<th>Setor</th>
 							<th class="ik-table-col-icons" sec:authorize="hasRole('MASTERROOT')"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="usuario : ${lista}">
-							<td class="text-center" th:text="${usuario.empresa.nome}"></td>
+							<td class="text-center" th:text="${usuario.funcional}"></td>
 							<td class="text-center">
 								<a	th:href="@{/administrador/usuarios/{codigo}(codigo=${usuario.codigo})}" th:text="${usuario.nome}"></a>
 							</td>
+							<td class="text-center" th:text="${usuario.empresa.nome}"></td>
 							<td class="text-center" th:text="${usuario.setor.descricao}"></td>
 							<td class="text-center" style="vertical-align: middle;" sec:authorize="hasRole('MASTERROOT')">
 								<button type="button" class="btn btn-danger btn-xs btn-block btn-active">
