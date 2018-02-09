@@ -46,7 +46,7 @@
 							<div class="col-xs-12 col-sm-3 col-md-3 componenteform">
 								<div class="form-group" th:classappend="${#fields.hasErrors('cnpj')} ? has-error">
 									<label class="input-group-addon control-label">cnpj</label>
-									<input id="cpf"  type="text" class="form-control cpf"  th:field="*{cnpj}"/>
+									<input id="cpf"  type="text" class="form-control cnpj"  th:field="*{cnpj}"/>
 								</div>
 							</div>
 							
@@ -108,8 +108,8 @@
 	<script th:src="@{/webjars/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.pt-BR.min.js}"></script>
 	<script th:src="@{/layout/js/jquery.mask.min.js}"></script>
 	<script type="text/javascript">
-		$(".celular").mask("(99)00000-0000");
-		$(".cpf").mask("000.000.000-00");
+		$(".celular").mask("(99)90000-0000");
+		$(".cnpj").mask("00.000.000/0000-00");
 	</script>
 	<script th:src="@{/layout/js/VisualizarImagem.js}"></script>
 </th:block>

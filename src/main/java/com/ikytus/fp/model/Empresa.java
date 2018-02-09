@@ -31,7 +31,7 @@ public class Empresa extends AbstractEntity {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataadesao;
 	
-	@Column(length=14)
+	@Column(length=20)
     private String cnpj;
 			
 	@Column(length=100)
