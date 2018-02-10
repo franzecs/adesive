@@ -71,7 +71,7 @@
 								<td data-label="Empresa" th:text="${requisicao.empresa.nome}"></td>
 								<td data-label="Data" th:text="${{requisicao.data}}"></td>
 								<td	data-label="Pagamento" th:text="${requisicao.condicaopagamento}"></td>
-								<td data-label="valor" th:text="'R$ '  + ${{requisicao.getValor()}}"></td>
+								<td data-label="valor" th:text="'R$ '  + ${{requisicao.valortotal}}"></td>
 								<td	data-label="Status" class="text-center">
 									<span class="label"	th:text="${requisicao.status}"
 									th:classappend="|${requisicao.pendente ? 'label-warning':''} 

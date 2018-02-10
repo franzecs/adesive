@@ -1,6 +1,5 @@
 package com.ikytus.fp.model;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +14,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import com.ikytus.fp.model.ENUM.Status;
 
@@ -45,15 +46,15 @@ public class Requisicao extends AbstractEntity{
 	@OneToMany(mappedBy = "requisicao", cascade=CascadeType.ALL)
 	private List<Item> items;
 	
+	@Transient
+	@NumberFormat(pattern = "#,##0.00")
+	private Double valortotal;
 	
-	public String getValor() {
-		 DecimalFormat df = new DecimalFormat("#,##0.00");
-
-         String valor = df.format(getItems().stream()
- 				.mapToDouble(p ->p.getValortotal()).sum());
-				
-		return valor;
+	public Double getValortotal() {
+		this.valortotal = getItems().stream().mapToDouble(p ->p.getValortotal()).sum();
+		return valortotal;
 	}
+
 
 	public Empresa getEmpresa() {
 		return empresa;

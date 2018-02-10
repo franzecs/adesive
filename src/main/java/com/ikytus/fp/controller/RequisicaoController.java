@@ -76,7 +76,7 @@ public class RequisicaoController {
 		
 		if(requisicao.getCodigo() != null){
 			mv.addObject("listaItens", requisicao.getItems());
-			mv.addObject("valor", requisicao.getValor());
+			mv.addObject("valor", requisicao.getValortotal());
 		}
 		
 		mv.addObject("listaStatus", Status.values());
