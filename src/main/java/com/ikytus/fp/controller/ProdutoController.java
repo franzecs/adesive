@@ -1,8 +1,6 @@
 package com.ikytus.fp.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -83,7 +81,7 @@ public class ProdutoController {
 		
 		atributos.addFlashAttribute("mensagem","Produto salvo com sucesso!");				
 		
-		return new ModelAndView("redirect:/administrador/produtos/novo").addObject(produto);
+		return new ModelAndView("redirect:/administrador/produtos/novo");
 	}
 				
 	@GetMapping("/{codigo}")

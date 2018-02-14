@@ -91,6 +91,8 @@
 		
 			<div class="panel-body">
 				<div class="container-fluid">
+					<th:block layout:insert="~{layout/fragmentos/pageable :: pageSelect ('/requisicoes/novo')}"></th:block>
+					
 					<table id="tabela-itens" class="table  table-striped	table-bordered  table-hover  table-condensed table-reflow"
 						th:if="${not #strings.isEmpty(requisicao.codigo)}">
 						<thead>
