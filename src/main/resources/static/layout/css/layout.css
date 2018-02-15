@@ -123,12 +123,7 @@ html,body{
 }
 
 .logo-emp{
-	width: 100px!important;
-	height: 100px!important;
 	border-radius: 5px;
-}
-.logo-emp:hover {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 .menu-details{
