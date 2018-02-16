@@ -114,16 +114,16 @@
 								<td	class="text-center" th:text="${{item.dataentrega}}" data-label="Vr. Total"></td>
 								<td class="text-center hidden-xs" style="vertical-align: middle;">
 									<a class="btn btn-xs btn-info btn-active"
-										th:href="@{/itens/{codigo}(codigo=${item.codigo})}" title="Editar" data-toggle="tooltip"> 
+										th:href="@{/itens/{codigo}(codigo=${item.codigo})}" title="Detalhes" data-toggle="tooltip"> 
 										<i class="fa  fa-pencil"></i> 
 									</a>
 									
-									<button	type="button" class="btn btn-xs btn-danger btn-active" title="Deletar" data-toggle="tooltip" th:if="${!requisicao.entregue}">
+									<button	type="button" class="btn btn-xs btn-danger btn-active" title="Excluir" data-toggle="tooltip" th:if="${!requisicao.entregue}">
 										<i 	class="fa fa-trash" style="cursor: pointer" 
 											data-toggle="modal"
 											data-target="#confirmaExclusaoModal" 
 											data:nome="${item.codigo}"
-											data:url-apagar="@{/itens/deletar/{codigo}(codigo=${item.codigo})}">
+											data:url-apagar="@{/itens/{codigo}(codigo=${item.codigo})}">
 										</i>
 									</button>
 								</td>
@@ -143,6 +143,7 @@
 				</div>
 			</div>
 		</div>
+		<th:block layout:insert="~{layout/fragmentos/parts :: confirmaExclusao (@{/itens})}"></th:block>
 </section>
 <th:block layout:fragment="javascript-extra">
 	<script th:src="@{/layout/js/VisualizarImagem.js}"></script>

@@ -58,7 +58,7 @@ public class ItemController {
 		if(result.hasErrors()){return novo(codigoRequisicao, item);}
 		itemService.salvar(codigoRequisicao,item);
 		atributos.addFlashAttribute("mensagem","Item salvo com sucesso!");				
-		return new ModelAndView("redirect:/itens/novo").addObject(item).addObject("codigoRequisicao", codigoRequisicao);
+		return new ModelAndView("redirect:/itens/novo").addObject("codigoRequisicao", codigoRequisicao);
 	}
 				
 	@GetMapping("/{codigo}")
@@ -70,8 +70,11 @@ public class ItemController {
 	
 	@DeleteMapping("/{codigo}")
 	public ModelAndView deletar(@PathVariable Long codigo, RedirectAttributes atributos){
+		
+		Item item = itemRepository.findOne(codigo);
+		String codigoReq= String.valueOf(item.getRequisicao().getCodigo());
 		itemService.deletar(codigo);
 		atributos.addFlashAttribute("mensagem","Item removido com sucesso!");
-		return new ModelAndView("redirect:/requisicoes/");
+		return new ModelAndView("redirect:/requisicoes/"+codigoReq);
 	}
 }

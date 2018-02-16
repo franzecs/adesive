@@ -54,7 +54,7 @@
 							<th>Nome</th>
 							<th>Empresa</th>
 							<th>Setor</th>
-							<th class="ik-table-col-icons" sec:authorize="hasRole('MASTERROOT')"></th>
+							<th class="ik-table-col-icons" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -65,7 +65,7 @@
 							</td>
 							<td class="text-center" th:text="${usuario.empresa.nome}"></td>
 							<td class="text-center" th:text="${usuario.setor.descricao}"></td>
-							<td class="text-center" style="vertical-align: middle;" sec:authorize="hasRole('MASTERROOT')">
+							<td class="text-center" style="vertical-align: middle;" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')">
 								<button type="button" class="btn btn-danger btn-xs btn-block btn-active">
 									<i	class="fa fa-trash"	style="cursor: pointer"	
 										data-toggle="modal"	
