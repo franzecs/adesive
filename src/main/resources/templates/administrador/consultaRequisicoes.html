@@ -87,16 +87,17 @@
 													 ${requisicao.entregue ? 'label-success':''}|"></span>
 								</td>
 								<td class="text-center" data-label="Opções">
-									<a class="btn btn-xs btn-info btn-active"
+									<a class="btn btn-info btn-xs btn-active"
 										th:href="@{/requisicoes/{codigo}(codigo=${requisicao.codigo})}" title="Detalhes" data-toggle="tooltip"> 
 										<i class="fa  fa-pencil"></i> 
 									</a>
-									<button type="button" class="btn btn-danger btn-xs btn-block btn-active" th:if="${!requisicao.entregue}">
+									
+									<button type="button" class="btn btn-danger btn-xs btn-active" th:if="${!requisicao.entregue}">
 										<i	class="fa fa-trash"	style="cursor: pointer"	
 											data-toggle="modal"	
 											data-target="#confirmaExclusaoModal"
 											data:nome="${requisicao.codigo}"
-											data:url-apagar="@{/requisicoes/{codigo}(codigo=${requisicao.codigo})}">
+											data:url-apagar="@{/requisicoes/{codigo}/administrador(codigo=${requisicao.codigo})}">
 										</i>
 									</button>
 								</td>

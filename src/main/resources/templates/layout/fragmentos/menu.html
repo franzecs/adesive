@@ -75,6 +75,12 @@
 								class="fa  fa-list"></i> <span>Requisições</span>
 						</a>
 						</li>
+						<li role="separator" class="divider"></li>
+						<li class="aw-menu__item" sec:authorize="hasRole('MASTERROOT') or hasRole('ADMLOC')">
+							<a href=# > <i
+								class="fa  fa-gift"></i> <span>Promoções</span>
+						</a>
+						</li>
 					</ul>
 				</div>
 				<div class="dropdown componenteform">

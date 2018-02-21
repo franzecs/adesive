@@ -136,7 +136,14 @@ public class RequisicaoController {
 		return pconfig.montarPagina("administrador/consultaRequisicoes", listrequisicoes, filter)
 				.addObject("listaStatus", Status.values())
 				.addObject("empresas", empresaRepository.findAll());
+	}
+	
+	@DeleteMapping("/{codigo}/administrador")
+	public ModelAndView deletarAdm(@PathVariable Long codigo, RedirectAttributes atributos){
 		
+		requisicaoService.deletar(codigo);
 		
+		atributos.addFlashAttribute("mensagem","Requisição removida com sucesso!");
+		return new ModelAndView("redirect:/requisicoes/administrador");
 	}
 }
